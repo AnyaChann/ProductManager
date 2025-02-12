@@ -5,7 +5,7 @@ public class Product {
     private String name;
     private String description;
     private double price;
-    private int quantity; // Add this field
+    private int quantity;
 
     public Product() {
     }
@@ -15,14 +15,14 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.quantity = quantity; // Initialize this field
+        this.quantity = quantity; 
     }
 
     public Product(String name, String description, double price, int quantity) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.quantity = quantity; // Initialize this field
+        this.quantity = quantity;
     }
 
     public int getId() {
@@ -58,10 +58,10 @@ public class Product {
     }
 
     public int getQuantity() {
-        return quantity; // Add getter for quantity
+        return quantity;
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity; // Add setter for quantity
+        this.quantity = quantity;
     }
 }

@@ -1,3 +1,5 @@
+<!-- filepath: /p:/Semester4/ProductManager/src/main/webapp/index.jsp -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
