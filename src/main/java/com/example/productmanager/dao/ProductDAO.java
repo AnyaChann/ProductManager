@@ -12,7 +12,7 @@ public class ProductDAO {
     private EntityManager entityManager;
 
     public ProductDAO() {
-        entityManager = Persistence.createEntityManagerFactory("default").createEntityManager();
+        entityManager = Persistence.createEntityManagerFactory("ProductManagerPU").createEntityManager(); // Use the correct persistence unit name
     }
 
     public void createProduct(Product product) {

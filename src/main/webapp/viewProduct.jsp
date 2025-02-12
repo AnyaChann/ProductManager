@@ -7,6 +7,7 @@
     <h1>View Product</h1>
     <p><strong>ID:</strong> ${product.id}</p>
     <p><strong>Name:</strong> ${product.name}</p>
+    <p><strong>Description:</strong> ${product.description}</p>
     <p><strong>Price:</strong> ${product.price}</p>
     <p><strong>Quantity:</strong> ${product.quantity}</p>
     <a href="index.jsp">Back to Home</a>

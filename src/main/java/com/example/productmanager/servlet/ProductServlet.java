@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "ProductServlet", urlPatterns = {"/products"})
+@WebServlet(name = "ProductServlet", urlPatterns = {"/ProductServlet"})
 public class ProductServlet extends HttpServlet {
     private ProductService productService;
 
@@ -23,33 +23,57 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Product> products = productService.getAllProducts();
-        request.setAttribute("products", products);
-        request.getRequestDispatcher("/WEB-INF/views/productList.jsp").forward(request, response);
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "list";
+        }
+
+        switch (action) {
+            case "add":
+                showAddForm(request, response);
+                break;
+            case "view":
+                viewProduct(request, response);
+                break;
+            default:
+                listProducts(request, response);
+                break;
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if ("create".equals(action)) {
-            String name = request.getParameter("name");
-            String description = request.getParameter("description");
-            double price = Double.parseDouble(request.getParameter("price"));
-            int quantity = Integer.parseInt(request.getParameter("quantity")); // Handle quantity
-            Product product = new Product(name, description, price, quantity);
-            productService.addProduct(product);
-        } else if ("update".equals(action)) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            String name = request.getParameter("name");
-            String description = request.getParameter("description");
-            double price = Double.parseDouble(request.getParameter("price"));
-            int quantity = Integer.parseInt(request.getParameter("quantity")); // Handle quantity
-            Product product = new Product(id, name, description, price, quantity);
-            productService.updateProduct(product);
-        } else if ("delete".equals(action)) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            productService.deleteProduct(id);
+        if ("add".equals(action)) {
+            addProduct(request, response);
         }
-        response.sendRedirect("products");
+    }
+
+    private void showAddForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("addProduct.jsp").forward(request, response);
+    }
+
+    private void addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        double price = Double.parseDouble(request.getParameter("price"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+        Product product = new Product(name, description, price, quantity);
+        productService.addProduct(product);
+        response.sendRedirect("ProductServlet");
+    }
+
+    private void viewProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Product product = productService.getProduct(id);
+        request.setAttribute("product", product);
+        request.getRequestDispatcher("viewProduct.jsp").forward(request, response);
+    }
+
+    private void listProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Product> products = productService.getAllProducts();
+        request.setAttribute("products", products);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 }
