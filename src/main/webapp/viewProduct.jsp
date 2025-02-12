@@ -1,3 +1,5 @@
+<!-- filepath: /p:/Semester4/ProductManager/src/main/webapp/viewProduct.jsp -->
+<%@ taglib uri="http://jakarta.apache.org/taglibs/standard-rt" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
